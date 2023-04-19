@@ -16,11 +16,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/alunos', (req, res) => {
-    res.send('{"nome":"Guilherme"}');
+  res.send('{"nome":"Guilherme"}');
 });
 
 app.post('/alunos', (req, res) => {
-    res.send('Executou um post');
+  res.send('Executou um post');
 });
 
 app.get('/alunos/:id', (req, res) => {
@@ -28,25 +28,37 @@ app.get('/alunos/:id', (req, res) => {
   if (id <= 10) {
     res.status(200).send('Aluno localizado com sucesso');
   }
-  else{
+  else {
     res.status(404).send('Aluno não encontrado');
   }
 });
 
 app.get('/autor', (req, res) => {
-  con.connect((err) => {
-    if (err) {
-      throw err;
+  con.query('SELECT * FROM tbAutor', (erroSQL, result, fields) => {
+    if (erroSQL) {
+      throw erroSQL;
     }
-    con.query('SELECT * FROM tbAutor',(err, result, fields) => {
-      if (err) {
-        throw err;
-      }
-      console.log(result);
-      res.status(200).send(result);
-    });
+    res.status(200).send(result);
   });
 });
+
+app.get('/autor/:id', (req, res) => {
+  const idautor = req.params.id;
+  const sql = `SELECT * FROM tbAutor WHERE IdAutor = ?`;
+  console.log(sql);
+  con.query(sql, [idautor], (erroSQL, result, fields) => {
+    if (erroSQL) {
+      throw erroSQL;
+    }
+    if (result.length > 0) {
+      res.status(200).send(result);
+    }
+    else {
+      res.status(404).send('Não encontrado');
+    }
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
