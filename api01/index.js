@@ -11,18 +11,6 @@ var con = mysql.createConnection({
   database: 'dbbiblioteca'
 });
 
-con.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  con.query('SELECT * FROM tbAutor',(err, result, fields) => {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-  });
-});
-
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
@@ -43,6 +31,21 @@ app.get('/alunos/:id', (req, res) => {
   else{
     res.status(404).send('Aluno não encontrado');
   }
+});
+
+app.get('/autor', (req, res) => {
+  con.connect((err) => {
+    if (err) {
+      throw err;
+    }
+    con.query('SELECT * FROM tbAutor',(err, result, fields) => {
+      if (err) {
+        throw err;
+      }
+      console.log(result);
+      res.status(200).send(result);
+    });
+  });
 });
 
 app.listen(port, () => {
