@@ -3,6 +3,7 @@ const mysql = require('mysql');
 
 const app = express();
 const port = 3000;
+app.use(express.json())
 
 var con = mysql.createConnection({
   host: 'localhost',
@@ -77,8 +78,10 @@ app.delete('/autor/:id', (req, res) => {
 });
 
 app.post('/autor', (req, res) => {
-  const idAutor = req.params.id;
-  const sql = 'DELETE FROM tbAutor WHERE IdAutor = ?';
+  const noautor = req.body.noautor;
+  const idnacionalidade = req.body.idnacionalidade;
+
+  const sql = 'INSERT INTO tbAutor (NoAutor, IdNacionalidade) VALUES (?, ?)';
   con.query(sql, [idAutor], (erroComandoSQL, result, fields) => {
     if (erroComandoSQL) {
       throw erroComandoSQL;
