@@ -82,16 +82,16 @@ app.post('/autor', (req, res) => {
   const idnacionalidade = req.body.idnacionalidade;
 
   const sql = 'INSERT INTO tbAutor (NoAutor, IdNacionalidade) VALUES (?, ?)';
-  con.query(sql, [idAutor], (erroComandoSQL, result, fields) => {
+  con.query(sql, [noautor, idnacionalidade], (erroComandoSQL, result, fields) => {
     if (erroComandoSQL) {
       throw erroComandoSQL;
     }
     
     if (result.affectedRows > 0) {
-      res.status(200).send('Registro excluído com sucesso');
+      res.status(200).send('Registro incluído com sucesso');
     }
     else {
-      res.status(404).send('Não encontrado');
+      res.status(400).send('Erro ao incluir o registro');
     }
   });
 });
