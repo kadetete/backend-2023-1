@@ -59,6 +59,39 @@ app.get('/autor/:id', (req, res) => {
   });
 });
 
+app.delete('/autor/:id', (req, res) => {
+  const idAutor = req.params.id;
+  const sql = 'DELETE FROM tbAutor WHERE IdAutor = ?';
+  con.query(sql, [idAutor], (erroComandoSQL, result, fields) => {
+    if (erroComandoSQL) {
+      throw erroComandoSQL;
+    }
+    
+    if (result.affectedRows > 0) {
+      res.status(200).send('Registro excluído com sucesso');
+    }
+    else {
+      res.status(404).send('Não encontrado');
+    }
+  });
+});
+
+app.post('/autor', (req, res) => {
+  const idAutor = req.params.id;
+  const sql = 'DELETE FROM tbAutor WHERE IdAutor = ?';
+  con.query(sql, [idAutor], (erroComandoSQL, result, fields) => {
+    if (erroComandoSQL) {
+      throw erroComandoSQL;
+    }
+    
+    if (result.affectedRows > 0) {
+      res.status(200).send('Registro excluído com sucesso');
+    }
+    else {
+      res.status(404).send('Não encontrado');
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
