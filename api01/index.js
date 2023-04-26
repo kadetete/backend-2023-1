@@ -96,6 +96,26 @@ app.post('/autor', (req, res) => {
   });
 });
 
+app.put('/autor/id', (req, res) => {
+  const idautor = req.params.id;
+  const noautor = req.body.noautor;
+  const idnacionalidade = req.body.idnacionalidade;
+
+  const sql = 'UPDATE tbAutor SET NoAutor = ?, IdNacionalidade = ? WHERE IdAutor = ?';
+  con.query(sql, [noautor, idnacionalidade], (erroUpdate, result, fields) => {
+    if (erroUpdate) {
+      throw erroUpdate;
+    }
+    
+    if (result.affectedRows > 0) {
+      res.status(200).send('Registro alterado com sucesso');
+    }
+    else {
+      res.status(404).send('Registro não encontrado');
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
