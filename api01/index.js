@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
 app.use(express.json())
+const MinhaSenha = 'ifrn@2023'
 
 var con = mysql.createConnection({
   host: 'localhost',
