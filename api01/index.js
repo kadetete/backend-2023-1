@@ -102,7 +102,7 @@ app.put('/autor/id', (req, res) => {
   const idnacionalidade = req.body.idnacionalidade;
 
   const sql = 'UPDATE tbAutor SET NoAutor = ?, IdNacionalidade = ? WHERE IdAutor = ?';
-  con.query(sql, [noautor, idnacionalidade], (erroUpdate, result, fields) => {
+  con.query(sql, [noautor, idnacionalidade, idautor], (erroUpdate, result) => {
     if (erroUpdate) {
       throw erroUpdate;
     }
