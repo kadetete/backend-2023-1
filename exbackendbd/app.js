@@ -34,7 +34,7 @@ app.get('/usuarios/:id', function(req, res) {
             console.error('Erro ao executar a consulta:', err);
             return;
         }
-        res.json(rows);
+        res.json(rows[0]);
     });
 });
 
