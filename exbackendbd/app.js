@@ -18,7 +18,18 @@ connection.connect(function(err) {
 });
 
 app.get('/usuarios', function(req, res) {
-    connection.query('SELECT * FROM usuarios', function(err, rows) {
+    connection.query('SELECT codusuarios, nomeusuario, loginname FROM usuarios', function(err, rows) {
+        if (err) {
+            console.error('Erro ao executar a consulta:', err);
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.get('/usuarios/:id', function(req, res) {
+    const id = req.params['id'];
+    connection.query('SELECT codusuarios, nomeusuario, loginname FROM usuarios WHERE codusuarios = ?', [id], function(err, rows) {
         if (err) {
             console.error('Erro ao executar a consulta:', err);
             return;
