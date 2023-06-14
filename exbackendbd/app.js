@@ -17,7 +17,7 @@ connection.connect(function(err) {
     console.log('Conectado ao banco de dados!')
 });
 
-app.get('/users', function(req, res) {
+app.get('/usuarios', function(req, res) {
     connection.query('SELECT * FROM usuarios', function(err, rows) {
         if (err) {
             console.error('Erro ao executar a consulta:', err);
