@@ -1,6 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+
+app.use(cors);
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -15,6 +19,18 @@ connection.connect(function(err) {
         return;
     }
     console.log('Conectado ao banco de dados!')
+});
+
+
+
+app.post('/login', function(req, res) {
+    connection.query('SELECT codusuarios, nomeusuario, loginname FROM usuarios', function(err, rows) {
+        if (err) {
+            console.error('Erro ao executar a consulta:', err);
+            return;
+        }
+        res.json(rows);
+    });
 });
 
 app.get('/usuarios', function(req, res) {
